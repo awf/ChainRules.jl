@@ -12,7 +12,7 @@ using Test
 # For testing purposes we use a lot of
 using ChainRulesCore: cast, extern, accumulate, accumulate!, store!, @scalar_rule,
     Wirtinger, wirtinger_primal, wirtinger_conjugate,
-    Zero, One, Casted, DNE, Thunk, AbstractDifferential
+    Zero, One, Casted, DoesNotExist, Thunk, AbstractDifferential
 
 include("test_util.jl")
 

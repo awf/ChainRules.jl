@@ -175,8 +175,8 @@ function rrule_test(f, ȳ, xx̄s::Tuple{Any, Any}...; rtol=1e-9, atol=1e-9, fdm
     x̄s_fd = _make_fdm_call(fdm, f, ȳ, xs, x̄s .== nothing)
     for (x̄_ad, x̄_fd) in zip(x̄s_ad, x̄s_fd)
         if x̄_fd === nothing
-            # The way we've structured the above, this tests that the rule is a DNERule
-            @test x̄_ad isa DNE
+            # The way we've structured the above, this tests that the rule is a DoesNotExistRule
+            @test x̄_ad isa DoesNotExist
         else
             @test isapprox(x̄_ad, x̄_fd; rtol=rtol, atol=atol, kwargs...)
         end
@@ -196,8 +196,8 @@ end
 function Base.isapprox(d_ad::Casted, d_fd; kwargs...)
     return all(isapprox.(extern(d_ad), d_fd; kwargs...))
 end
-function Base.isapprox(d_ad::DNE, d_fd; kwargs...)
-    error("Tried to differentiate w.r.t. a DNE")
+function Base.isapprox(d_ad::DoesNotExist, d_fd; kwargs...)
+    error("Tried to differentiate w.r.t. a DoesNotExist")
 end
 function Base.isapprox(d_ad::AbstractDifferential, d_fd; kwargs...)
     return isapprox(extern(d_ad), d_fd; kwargs...)
